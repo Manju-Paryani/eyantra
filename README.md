@@ -1,3 +1,2 @@
 # eyantra
 
-![Uploading image.png…]()
