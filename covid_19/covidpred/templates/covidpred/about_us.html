@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about_us</title>
+</head>
+<style>
+    .flip-card {
+  background-color: transparent;
+  width: 250px;
+  height: 250px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: white;
+  color: #4ca;
+  transform: rotateY(180deg);
+}
+
+
+.column {
+  float: left;
+  width: 25%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.logo-image {
+    width: auto;
+    height: 40px;
+    /* border-radius: 50%; */
+    overflow: hidden;
+    margin-top: -10px;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #222222;
+  color: white;
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 25px;
+  /* padding-top: 25px; */
+
+}
+.navbar{
+  font-family: Verdana,sans-serif;
+  font-size: 15px;
+}
+</style>
+<body>
+
+  <header class="row">
+
+   <!-- bootstrap file -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- bootstrap file-->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- navbar-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" class="styleheader" href="{% url "index" %}"><img class="logo-image" src="{% static 'img/covipred.png' %}" alt=""></a>
+        </div>
+        <div class="collapse navbar-collapse" id="mainNavBar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% static "files/covipred1.pdf" %}" target="_blank">Home Isolation Tips</a></li>
+            <li><a href="{% url "index" %}">Home</a></li>
+            
+
+            {% if user.is_authenticated %}
+            <li><a href="{% url "logout" %}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Logout</a></li>
+            <li><a href="{% url "about" %}"> About us</a></li>
+            {% else %}
+            <li><a href="{% url "register" %}"><span class="glyphicon glyphicon-user"></span> &nbsp; Sign up</a></li>
+            <li><a href="{% url "login" %}"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Log in</a></li>
+            <li><a href="{% url "about" %}"> About us</a></li>
+
+            {% endif %}
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <br/>
+  <br>
+  <br>
+    <center> <h1>About</h1></center>
+
+    <center><p>Covipred / We provide an efficient and accurate SARS-COV-2 RNA (COVID-19) Test results based on patient's symptoms.The unique pathogenesis mechanisms of SARS-COV-2, and the related spectrum of symptoms are the subject of many ongoing studies.The model we built provides initial COVID-19 test screening based on simple clinical signs and symptoms. Improving clinical priorities may lower the burden currently faced by
+health systems.
+
+We aim to provide precise and accurate results to the users and give them some Home isolation tips in PDF format..</p></center>
+     
+    <div class="footer">
+      <center \><h2>Who are we?</h2></center>
+
+      <br>
+     
+
+      <center>
+
+        <div class="row">
+          <div class="column">
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">        
+                  <img src="{% static 'img/pic.jpeg' %}" alt="Avatar" style="width:250px; height:250px;">
+                </div>
+                <div class="flip-card-back">
+                  <h1>Anjali Hassani</h1>
+                  <p>3rd year, Computer Engineering</p>
+                  <p>VESIT</p>
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div>
+            <div class="column">
+              <div class="flip-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">        
+                    <img src="{% static 'img/manju.jpeg' %}" alt="Avatar" style="width:250px; height:250px;">
+                  </div>
+                  <div class="flip-card-back">
+                    <h1>Manju Paryani</h1>
+                    <p>3rd year, Information Technology</p>
+                    <p>VESIT</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="column">
+              <div class="flip-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">        
+                    <img src="{% static 'img/gaurav2.jpg' %}" alt="Avatar" style="width:250px; height: 250px;">
+                  </div>
+                  <div class="flip-card-back">
+                    <h1>Gaurav Jagwani</h1>
+                    <p>3rd year, Electronics & Telecommunication</p>
+                    <p>VESIT</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="column">
+              <div class="flip-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">        
+                    <img src="{% static 'img/yash.jpg' %}" alt="Avatar" style="width:250px; height: 250px;">
+                  </div>
+                  <div class="flip-card-back">
+                    <h1>Yash Wadhwani</h1>
+                    <p>3rd year, Computer Engineering</p>
+                    <p>VESIT</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+
+      </center>
+    </div>
+    
+
+      
+    
+</body>
+</html>
