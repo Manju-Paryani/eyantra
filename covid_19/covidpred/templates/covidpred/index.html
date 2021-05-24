@@ -1,0 +1,421 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="title" content="project">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="language" content="English">
+  <meta name="author" content="vinayak sharma">
+
+  <title>{{title}}</title>
+
+
+  <!-- bootstrap file -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- bootstrap file-->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+  <!-- main css -->
+  <link rel="stylesheet" type="text/css" href="{% static "index.css" %}" />
+
+  <style>
+    /* .w3-green, .w3-hover-green:hover {
+        color: #050505!important;
+        background-color: #4CAF!important;
+        
+      } */
+    .w3-green,
+    .w3-hover-green:hover {
+      color: #050505 !important;
+      background-color: #FFF !important;
+      border: 7px solid #4CAF;
+    }
+
+    .w3-padding-64 {
+      padding-top: 30px !important;
+      padding-bottom: 30px !important;
+    }
+
+    .w3-border-blue,
+    .w3-hover-border-blue:hover {
+      border-color: #4CAF !important;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 25px;
+      font-size: 24px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #6ad0ba;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px #999;
+    }
+
+    .button:hover {
+      background-color: #4caf
+    }
+
+    .button:active {
+      background-color: #4caf;
+      box-shadow: 0 4px #666;
+      transform: translateY(4px);
+    }
+
+    .logo-image {
+      width: auto;
+      height: 40px;
+      /* border-radius: 50%; */
+      overflow: hidden;
+      margin-top: -10px;
+    }
+
+    .column {
+      float: left;
+      width: 33.33%;
+      padding: 10px;
+      /* height: 300px; Should be removed. Only for demonstration */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  </style>
+  <!-- message here -->
+
+  {% if messages %}
+  {% for message in messages %}
+
+  <script>
+    alert("{{ message }}");
+  </script>
+
+  {% endfor %}
+  {% endif %}
+
+  <!--_______________________________________________-->
+
+
+
+</head>
+
+<body class="container-fluid">
+
+
+  <header class="row">
+
+    <!-- navbar-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" class="styleheader" href="{% url "index" %}"><img class="logo-image"
+              src="{% static 'img/covipred.png' %}" alt=""></a>
+        </div>
+        <div class="collapse navbar-collapse" id="mainNavBar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% static "files/covipred1.pdf" %}" target="_blank">Home Isolation Tips</a></li>
+            <li><a href="{% url "index" %}">Home</a></li>
+
+            {% if user.is_authenticated %}
+            <li><a href="{% url "logout" %}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Logout</a></li>
+            <li><a href="{% url "about" %}"> About us</a></li>
+            {% else %}
+            <li><a href="{% url "register" %}"><span class="glyphicon glyphicon-user"></span> &nbsp; Sign up</a></li>
+            <li><a href="{% url "login" %}"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Log in</a></li>
+            <li><a href="{% url "about" %}"> About us</a></li>
+
+            {% endif %}
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <br />
+  <br>
+  <br>
+  <div class="row"> {% block start %}
+    {% if user.is_authenticated %}
+    <center>
+      <h1 style="font-weight: bold;">welcome {{user.username}} !!</h1>
+      <h3>kindly fill up the details so that we can provide you the result.</h3>
+    </center>
+    <br>
+
+    <br>
+    <center>
+      <form action="{% url 'result' %}">
+        {% csrf_token %}
+
+        <!-- <div class="w3-green w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round" style="width:50%"> -->
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p> Do you experience any sort of Breathing Problem:
+            <br>
+            <input type="radio" id="no" required name="Breathing Problem" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Breathing Problem" value=1>Yes
+
+          </p>
+        </div>
+        <br>
+        <br>
+
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Do you feel Fever:<br>
+            <input type="radio" id="no" required name="Fever" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Fever" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p> Dry Cough?:
+            <br>
+            <input type="radio" id="no" required name="Dry Cough" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Dry Cough" value=1>Yes
+          </p>
+
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Sore throat?:
+            <br>
+            <input type="radio" id="no" required name="Sore throat" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Sore throat" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Running Nose?:
+            <br>
+            <input type="radio" id="no" required name="Running Nose" value= 0>No
+            <br>
+            <input type="radio" id="yes" required name="Running Nose" value= 1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Are you suffering from Asthama?:
+            <br>
+            <input type="radio" id="no" required name="Asthma" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Asthma" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Any history of Chronic lung diseases?:
+            <br>
+            <input type="radio" id="no" required name="Chronic Lung Disease" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Chronic Lung Disease" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Do you get frequent headaches?:
+            <br>
+            <input type="radio" id="no" required name="Headache" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Headache" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Any Heart Disease?:
+            <br>
+            <input type="radio" id="no" required name="Heart Disease" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Heart Disease" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Are you suffering from Diabetes?:
+            <br>
+            <input type="radio" id="no" required name="Diabetes" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Diabetes" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p> Hyper Tension?:
+            <br>
+            <input type="radio" id="no" required name="Hyper Tension" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Hyper Tension" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>do you experience Fatigue?:
+            <br>
+            <input type="radio" id="no" required name="Fatigue " value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Fatigue " value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Any Gastrointestinal problem?:
+            <br>
+            <input type="radio" id="no" required name="Gastrointestinal " value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Gastrointestinal " value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p> Have you travelled Abroad in last 7 to 10 days?:
+            <br>
+            <input type="radio" id="no" required name="Abroad travel" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Abroad travel" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p>Were u in contact with COVID Patient?:
+            <br>
+            <input type="radio" id="no" required name="Contact with COVID Patient" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Contact with COVID Patient" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p> Have you attended any large Gathering recently?:
+            <br>
+            <input type="radio" id="no" required name="Attended Large Gathering" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Attended Large Gathering" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p> Visited Public Exposed Places?
+            <br>
+            <input type="radio" id="no" required name="Visited Public Exposed Places" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Visited Public Exposed Places" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+
+        <div class="w3-panel w3-pale-blue w3-hover-shadow w3-padding-64 w3-center w3-leftbar w3-round w3-border-blue"
+          style="width:50%">
+          <p> Is your Family working in Public Exposed Places?:
+            <br>
+            <input type="radio" id="no" required name="Family working in Public Exposed Places" value=0>No
+            <br>
+            <input type="radio" id="yes" required name="Family working in Public Exposed Places" value=1>Yes
+          </p>
+        </div>
+        <br>
+        <br>
+
+        <!-- Breathing Problem: <input type="text" required name="Breathing Problem"><br><br>
+          Fever: <input type="text" required name="Fever"><br><br>
+          Dry Cough: <input type="text" required name="Dry Cough"><br><br>
+          Sore throat: <input type="text" required name="Sore throat"><br><br>
+          Hyper Tension:<input type="text" required name="Hyper Tension"><br><br>
+          Abroad travel:<input type="text" required name="Abroad travel"><br><br>
+          Contact with COVID Patient:<input type="text" required name="Contact with COVID Patient"><br><br>
+          Attended Large Gathering:<input type="text" required name="Attended Large Gathering"><br><br>
+          Visited Public Exposed Places:<input type="text" required name="Visited Public Exposed Places"><br><br>
+          Family working in Public Exposed Places:<input type="text" required name="Family working in Public Exposed Places"><br><br>
+           -->
+        <input class="button" type="submit" name="" value="submit">
+        <br>
+        <br>
+      </form>
+    </center>
+    {% else %}
+    <!-- <center> -->
+    <div class="row">
+      <div class="column">
+        <img style="width:100%; padding-top: 100px;" src="{% static 'img/image.svg' %}" alt="" />
+      </div>
+      <div class="column" style="margin-top:17%;">
+        <center>
+          <h3>If you are a new user, <a href="register"><strong> <u>Register here</u> </strong></a>.</h3>
+          <h4>Already have an account? <a href="login"><strong><u>Login here</u></strong></a>.</h4>
+        </center>
+      </div>
+      <div class="column">
+        <img style="width:100%; padding-top: 100px;" src="{% static 'img/image2.svg' %}" alt="" />
+      </div>
+    </div>
+
+    <!-- </center> -->
+    {% endif %}
+    {% endblock %}
+  </div>
+</body>
+
+</html>
