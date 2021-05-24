@@ -8,5 +8,6 @@ health systems.
 
 # Hardware and Software Requirements
 # Process Flow
+![final flowchart](https://user-images.githubusercontent.com/66443581/119313324-0bd94400-bc91-11eb-8358-ca9e83eee7db.png)
 
 # Data FLow Diagram
